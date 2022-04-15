@@ -1,1 +1,25 @@
-<p>settings works!</p>
+<div class="container">
+    <div>
+        <form [formGroup]="settingForm" >
+            <div class="form">
+                <div class="labels">
+                    <label for="min">Минуты в ячейке: </label>
+                    <label for="rest">Свободные дни: </label>
+                    <label for="colorTheme">Цветовая тема: </label>
+                </div>
+                <div class="inputs">
+                    <input id="min" type="phone" formControlName="min">
+
+                    <div *ngFor="let i of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']; let ind=index">
+                        <label for="rest{{ind}}">{{i}}</label>
+                        <input id="rest{{ind}}" type="checkbox" formControlName="rest">
+                    </div>
+
+                    <input id="colorTheme" type="text" formControlName="colorTheme">
+                </div>
+            </div>
+                <button type="submit" [disabled]="!settingForm.valid">save</button>
+        </form>
+        <button>change</button>
+    </div>
+</div>

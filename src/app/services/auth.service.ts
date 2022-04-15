@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from "@angular/common/http"
 import {catchError, Observable, of, throwError} from 'rxjs';
 
-interface UserInfo{
+export interface UserInfo{
   email: string
   password: string
 }
@@ -12,7 +13,12 @@ interface UserInfo{
 })
 export class AuthService {
 
-  constructor(private router: Router) { }
+  private url = 'https://timetable-4b073-default-rtdb.firebaseio.com'
+
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) { }
 
   setToken(token: string){
     localStorage.setItem('token', token)
@@ -26,13 +32,8 @@ export class AuthService {
     return this.getToken() !== null
   }
 
-  login(userInfo: UserInfo): Observable<string|boolean>{
-    if (userInfo.email == 'admin@gmail.com' 
-        && userInfo.password == 'admin123'){
-          this.setToken('ycjfcjty6768fvgvhgrd6')
-          return of(true)
-        }
-    return throwError(()=>new Error('Failed Loggin'))
+  login(): Observable<UserInfo>{
+    return this.http.get<UserInfo>(`${this.url}/admin.json`)
   }
 
   logout(){
