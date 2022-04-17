@@ -5,7 +5,8 @@ import {catchError, Observable, of, throwError} from 'rxjs';
 
 export interface UserInfo{
   email: string
-  password: string
+  password: string,
+  status: string
 }
 
 @Injectable({
@@ -28,12 +29,12 @@ export class AuthService {
     return localStorage.getItem('token')
   }
 
-  idLoggetIn(){
+  isLoggetInAdmin(){
     return this.getToken() !== null
   }
 
-  login(): Observable<UserInfo>{
-    return this.http.get<UserInfo>(`${this.url}/admin.json`)
+  login(): Observable<any>{
+    return this.http.get<UserInfo>(`${this.url}/users.json`)
   }
 
   logout(){

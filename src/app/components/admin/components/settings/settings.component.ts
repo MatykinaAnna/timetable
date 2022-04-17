@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { AdminService } from 'src/app/services/admin.service';
+
 
 @Component({
   selector: 'app-settings',
@@ -12,17 +14,52 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private adminService: AdminService
   ) {
     this.settingForm = new FormGroup({
-      min: new FormControl({value: 60, disabled: true}, Validators.required),
-      rest: this.fb.array([
-        this.fb.control({value: false, disabled: true})
-      ]),
-      colorTheme: new FormControl({value:'', disables: true}),
+      min: new FormControl({value: null, disabled: true}, Validators.required),
+      rest: new FormGroup({
+        mon: new FormControl({value: null, disabled: true}, Validators.required),
+        tues: new FormControl({value: null, disabled: true}, Validators.required),
+        wed: new FormControl({value: null, disabled: true}, Validators.required),
+        thurs: new FormControl({value: null, disabled: true}, Validators.required),
+        fri: new FormControl({value: null, disabled: true}, Validators.required),
+        sat: new FormControl({value: null, disabled: true}, Validators.required),
+        sun: new FormControl({value: null, disabled: true}, Validators.required),
+      }),
+      colorTheme: new FormControl({value: null, disabled: true}),
     })
    }
 
   ngOnInit(): void {
+    this.adminService.getSetting().subscribe(data=>{
+      //console.log('data', data)
+      this.settingForm.setValue({
+        min: data.min,
+        rest: {
+          mon: data.rest.mon,
+          fri: data.rest.fri,
+          sat: data.rest.sat,
+          sun: data.rest.sun,
+          thurs: data.rest.thurs,
+          tues: data.rest.tues,
+          wed: data.rest.wed,
+        },
+        colorTheme: data.colorTheme
+      })
+    })
+  }
+
+  save(){
+    if (this.settingForm.disabled){
+      this.settingForm.enable(this.settingForm.value)
+    } else {
+      console.log(this.settingForm.value)
+      this.adminService.updateSetting(this.settingForm.value)
+        .subscribe((res)=>{
+          console.log('res', res)
+        })
+    }
   }
 
 }

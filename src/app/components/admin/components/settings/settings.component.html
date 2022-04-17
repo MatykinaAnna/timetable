@@ -1,25 +1,28 @@
 <div class="container">
     <div>
-        <form [formGroup]="settingForm" >
+        <form [formGroup]="settingForm" (ngSubmit)="save()">
             <div class="form">
-                <div class="labels">
+                <div class="min">
                     <label for="min">Минуты в ячейке: </label>
-                    <label for="rest">Свободные дни: </label>
-                    <label for="colorTheme">Цветовая тема: </label>
-                </div>
-                <div class="inputs">
                     <input id="min" type="phone" formControlName="min">
-
-                    <div *ngFor="let i of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']; let ind=index">
-                        <label for="rest{{ind}}">{{i}}</label>
-                        <input id="rest{{ind}}" type="checkbox" formControlName="rest">
+                </div>
+                <div class="rest">
+                    <label for="rest">Свободные дни: </label>
+                    <div formGroupName="rest">
+                        <div *ngFor="let i of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                                    let d of ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'] ">
+                            <label for="{{d}}">{{i}}</label>
+                            <input id="{{d}}" type="checkbox" formControlName="{{d}}">
+                        </div>
                     </div>
-
+                </div>
+                <div class="color">
+                    <label for="colorTheme">Цветовая тема: </label>
                     <input id="colorTheme" type="text" formControlName="colorTheme">
                 </div>
             </div>
+                <button >change</button>
                 <button type="submit" [disabled]="!settingForm.valid">save</button>
         </form>
-        <button>change</button>
     </div>
 </div>

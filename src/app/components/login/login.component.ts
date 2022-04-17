@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class loginComponent implements OnInit {
 
   loginForm!: FormGroup;
 
@@ -28,25 +28,41 @@ export class LoginComponent implements OnInit {
         ])
     });
 
-    if (this.authService.idLoggetIn()){
+    if (this.authService.isLoggetInAdmin()){
       this.router.navigate(['admin'])
     }
   }
 
-  submitLogin(){
+  submitlogin(){
     // this.authService.login(this.loginForm.value).subscribe({
     //   next: ()=> this.router.navigate(['admin']),
     //   error:((err)=> alert(err.message))
     // })
 
     this.authService.login().subscribe((d)=>{
-      if (this.loginForm.value.email==d.email &&
-          this.loginForm.value.password==d.password){
-            this.authService.setToken('ycjfcjty6768fvgvhgrd6')
-            this.router.navigate(['admin'])
-          } else {
-            alert('Ошибка входа')
-          }
+      console.log('login', d)
+      let status: string = ''
+      for (let key in d){
+        if (d[key].email == this.loginForm.value.email &&
+            d[key].password == this.loginForm.value.password){
+              status = d[key].status
+              break
+            }
+      }
+      if (status == 'admin'){
+        this.authService.setToken('ycjfcjty6768fvgvhgrd6')
+        this.router.navigate(['admin'])
+      } else {
+        alert('Ошибка входа')
+      }
+      
+      // if (this.loginForm.value.email==d.email &&
+      //     this.loginForm.value.password==d.password){
+      //       this.authService.setToken('ycjfcjty6768fvgvhgrd6')
+      //       this.router.navigate(['admin'])
+      //     } else {
+      //       alert('Ошибка входа')
+      //     }
     })
 
     // this.authService.login(this.loginForm.value).subscribe(date=>{
