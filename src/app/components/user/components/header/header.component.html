@@ -1,0 +1,26 @@
+<header>
+    <div class="row">
+      <div>User Menu</div>
+      <nav>
+        <div class="navbar">
+          <div>
+            <a
+              routerLinkActive="active"
+              routerLink="./home"
+            >home</a
+            >
+          </div>
+          <div>
+            <a
+              routerLinkActive="active"
+              routerLink="./settings"
+            >settings</a
+            >
+          </div>
+          <button type="button" (click)="logout()">
+            Logout
+          </button>
+        </div>
+      </nav>
+    </div>
+</header>

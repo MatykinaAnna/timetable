@@ -18,6 +18,8 @@ export class SettingsComponent implements OnInit {
   ) {
     this.settingForm = new FormGroup({
       min: new FormControl({value: null, disabled: true}, Validators.required),
+      start: new FormControl({value: null, disabled: true}, Validators.required),
+      end: new FormControl({value: null, disabled: true}, Validators.required),
       rest: new FormGroup({
         mon: new FormControl({value: null, disabled: true}, Validators.required),
         tues: new FormControl({value: null, disabled: true}, Validators.required),
@@ -33,9 +35,11 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getSetting().subscribe(data=>{
-      //console.log('data', data)
+      console.log('data', data)
       this.settingForm.setValue({
         min: data.min,
+        start: data.start,
+        end: data.end,
         rest: {
           mon: data.rest.mon,
           fri: data.rest.fri,

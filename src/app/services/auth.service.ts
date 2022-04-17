@@ -4,7 +4,8 @@ import { HttpClient } from "@angular/common/http"
 import {catchError, Observable, of, throwError} from 'rxjs';
 
 export interface UserInfo{
-  email: string
+  email: string,
+  id: string,
   password: string,
   status: string
 }

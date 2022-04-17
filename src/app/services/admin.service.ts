@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators'
 export interface Setting{
   min: number;
   colorTheme: string|null;
+  start: number;
+  end: number;
   rest:{
     fri: boolean;
     mon: boolean;

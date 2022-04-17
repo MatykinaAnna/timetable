@@ -52,6 +52,9 @@ export class loginComponent implements OnInit {
       if (status == 'admin'){
         this.authService.setToken('ycjfcjty6768fvgvhgrd6')
         this.router.navigate(['admin'])
+      } else if (status == 'user'){
+        this.authService.setToken('hbbkbbhboo88')
+        this.router.navigate(['user'])
       } else {
         alert('Ошибка входа')
       }
