@@ -6,20 +6,26 @@
     <form action="" [formGroup]="profileForm">
         <div formArrayName="tasks">
             <div *ngFor="let task of tasks.controls; let i=index;" class="task">
-                <label for="time-{{ i }}" *ngIf="time[i]">
-                    {{time[i].format('HH:mm')}}
-                </label>
-
                 <div *ngIf="taskIsSet(time[i].format('HH:mm')).rez">
-                    <span>
-                        {{taskIsSet(time[i].format('HH:mm')).title}}
-                    </span>
-                    <button class="btn btn-primery btn-del"
-                            (click)="remove(time[i].format('HH:mm'))">
-                        х
-                    </button>   
+                    <div
+                        *ngIf="taskIsSet(time[i].format('HH:mm')).task?.author_id
+                                == user_id">
+                                <label for="time-{{ i }}" *ngIf="time[i]">
+                                    {{time[i].format('HH:mm')}}
+                                </label>
+                                <span>
+                                    {{taskIsSet(time[i].format('HH:mm')).title}}
+                                </span>
+                                <button class="btn btn-primery btn-del"
+                                        (click)="remove(time[i].format('HH:mm'))">
+                                    х
+                                </button> 
+                    </div> 
                 </div>
                 <div *ngIf="!taskIsSet(time[i].format('HH:mm')).rez">
+                    <label for="time-{{ i }}" *ngIf="time[i]">
+                        {{time[i].format('HH:mm')}}
+                    </label>
                     <input id="time-{{ i }}" type="text" [formControlName]="i">
                 </div>
             </div>

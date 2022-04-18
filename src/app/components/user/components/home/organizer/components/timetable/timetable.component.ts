@@ -7,6 +7,7 @@ import { Task } from '../../../../../../../services/task.service'
 import { DateService } from '../../../../../../../services/date.service';
 import * as moment from 'moment';
 import { switchMap } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-timetable',
@@ -28,6 +29,7 @@ export class TimetableComponent implements OnInit {
     public dateService: DateService, 
     private adminService: AdminService,
     private taskService: TaskService,
+    private authService: AuthService,
     private fb: FormBuilder  
   ) { }
 
@@ -47,6 +49,10 @@ export class TimetableComponent implements OnInit {
     })
 
     this.getTasks()
+  }
+
+  get user_id(){
+    return this.authService.getToken()
   }
 
   get tasks() {
@@ -72,7 +78,7 @@ export class TimetableComponent implements OnInit {
           title: this.tasks.value[key],
           date: this.dateService.date.value.format('DD-MM-YYYY'),
           time: this.time[Number(key)].format('HH:mm'),
-          author_id: '1'
+          author_id: String(this.authService.getToken)
         }
         this.taskService.addTask(task).subscribe((t)=>{
           this.array_tasks.push(t)
