@@ -7,6 +7,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+// import { MomentPipe } from 'src/app/services/moment.pipe';
+
 
 
 @NgModule({
@@ -20,7 +22,7 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
   ]
 })
 export class AdminModule { }

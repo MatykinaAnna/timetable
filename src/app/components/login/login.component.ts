@@ -42,35 +42,26 @@ export class loginComponent implements OnInit {
     this.authService.login().subscribe((d)=>{
       console.log('login', d)
       let status: string = ''
+      let id: string = ''
       for (let key in d){
         if (d[key].email == this.loginForm.value.email &&
             d[key].password == this.loginForm.value.password){
               status = d[key].status
+              id = d[key].id
               break
             }
       }
       if (status == 'admin'){
-        this.authService.setToken('ycjfcjty6768fvgvhgrd6')
+        this.authService.setToken(id)
         this.router.navigate(['admin'])
       } else if (status == 'user'){
-        this.authService.setToken('hbbkbbhboo88')
+        this.authService.setToken(id)
         this.router.navigate(['user'])
       } else {
         alert('Ошибка входа')
       }
       
-      // if (this.loginForm.value.email==d.email &&
-      //     this.loginForm.value.password==d.password){
-      //       this.authService.setToken('ycjfcjty6768fvgvhgrd6')
-      //       this.router.navigate(['admin'])
-      //     } else {
-      //       alert('Ошибка входа')
-      //     }
     })
-
-    // this.authService.login(this.loginForm.value).subscribe(date=>{
-    //   console.log(date)
-    // })
   }
 
 }
