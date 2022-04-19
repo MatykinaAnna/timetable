@@ -78,7 +78,7 @@ export class TimetableComponent implements OnInit {
           title: this.tasks.value[key],
           date: this.dateService.date.value.format('DD-MM-YYYY'),
           time: this.time[Number(key)].format('HH:mm'),
-          author_id: String(this.authService.getToken)
+          author_id: String(this.authService.getToken())
         }
         this.taskService.addTask(task).subscribe((t)=>{
           this.array_tasks.push(t)
